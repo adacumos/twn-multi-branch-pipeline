@@ -16,17 +16,23 @@ pipeline {
                 }
             }
         }*/
-        stage("build") {
+        stage("initialize") {
             steps {
                 script {
                     //pipelineUtils.buildJar()
-                    echo "Building the application...."
+                    echo "Initializing...."
+                    echo "Executing pipeline for $BRANCH_NAME"
                 }
             }
         }
 
         stage("test") {
             steps {
+                when {
+                    expression {
+                        BRANCH_NAME == "master"
+                    }
+                }
                 script {
                     //pipelineUtils.buildDockerImage()
                     echo "Testing the application...."
@@ -34,8 +40,26 @@ pipeline {
             }
         }
 
+        stage("build") {
+            steps {
+                when {
+                    expression {
+                        BRANCH_NAME == "master"
+                    }
+                }
+                script {
+                    echo "Building the application"
+                }
+            }
+        }
+
         stage("deploy") {
             steps {
+                when {
+                    expression {
+                        BRANCH_NAME == "master"
+                    }
+                }
                 script {
                     //pipelineUtils.deploy()
                     echo "Deploying the application...."
