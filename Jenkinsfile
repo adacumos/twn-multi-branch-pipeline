@@ -1,61 +1,37 @@
-//def pipelineUtils 
-
-pipeline {   
+pipeline {
     agent any
-    /*tools {
-        maven 'maven-3.9'
-    }
-    environment {
-        DOCKER_IMAGE = "adacumos/twn-bootcamp-repo:java-maven-app-1.1"
-    }*/
     stages {
-        /*stage('initialize') {
-            steps {
-                script {
-                    pipelineUtils = load 'pipelineUtils.groovy'
+        stage("build") {
+            when {
+                expression {
+                    BRANCH_NAME == "main"
                 }
             }
-        }*/
-        stage("build") {
             steps {
-                when {
-                    expression {
-                        BRANCH_NAME == "main"
-                    }
-                }
-                script {
-                    //pipelineUtils.buildJar()
-                    echo "Building the application...."
-                }
+                echo "Building the application...."
             }
         }
 
         stage("test") {
+            when {
+                expression {
+                    BRANCH_NAME == "main"
+                }
+            }
             steps {
-                when {
-                    expression {
-                        BRANCH_NAME == "main"
-                    }
-                }
-                script {
-                    //pipelineUtils.buildDockerImage()
-                    echo "Testing the application...."
-                }
+                echo "Testing the application...."
             }
         }
 
         stage("deploy") {
-            steps {
-                when {
-                    expression {
-                        BRANCH_NAME == "main"
-                    }
-                }
-                script {
-                    //pipelineUtils.deploy()
-                    echo "Deploying the application...."
+            when {
+                expression {
+                    BRANCH_NAME == "main"
                 }
             }
-        }               
+            steps {
+                echo "Deploying the application...."
+            }
+        }
     }
-} 
+}
