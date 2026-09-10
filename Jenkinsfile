@@ -16,12 +16,16 @@ pipeline {
                 }
             }
         }*/
-        stage("initialize") {
+        stage("build") {
             steps {
+                when {
+                    expression {
+                        BRANCH_NAME == "main"
+                    }
+                }
                 script {
                     //pipelineUtils.buildJar()
-                    echo "Initializing...."
-                    echo "Executing pipeline for $BRANCH_NAME"
+                    echo "Building the application...."
                 }
             }
         }
@@ -36,19 +40,6 @@ pipeline {
                 script {
                     //pipelineUtils.buildDockerImage()
                     echo "Testing the application...."
-                }
-            }
-        }
-
-        stage("build") {
-            steps {
-                when {
-                    expression {
-                        BRANCH_NAME == "main"
-                    }
-                }
-                script {
-                    echo "Building the application"
                 }
             }
         }
