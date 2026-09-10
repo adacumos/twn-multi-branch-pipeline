@@ -1,33 +1,35 @@
-def pipelineUtils 
+//def pipelineUtils 
 
 pipeline {   
     agent any
-    tools {
+    /*tools {
         maven 'maven-3.9'
     }
     environment {
         DOCKER_IMAGE = "adacumos/twn-bootcamp-repo:java-maven-app-1.1"
-    }
+    }*/
     stages {
-        stage('initialize') {
+        /*stage('initialize') {
             steps {
                 script {
                     pipelineUtils = load 'pipelineUtils.groovy'
                 }
             }
-        }
-        stage("build jar") {
+        }*/
+        stage("build") {
             steps {
                 script {
-                    pipelineUtils.buildJar()
+                    //pipelineUtils.buildJar()
+                    echo "Building the application...."
                 }
             }
         }
 
-        stage("build docker image") {
+        stage("test") {
             steps {
                 script {
-                    pipelineUtils.buildDockerImage()
+                    //pipelineUtils.buildDockerImage()
+                    echo "Testing the application...."
                 }
             }
         }
@@ -35,7 +37,8 @@ pipeline {
         stage("deploy") {
             steps {
                 script {
-                    pipelineUtils.deploy()
+                    //pipelineUtils.deploy()
+                    echo "Deploying the application...."
                 }
             }
         }               
