@@ -18,6 +18,11 @@ pipeline {
         }*/
         stage("build") {
             steps {
+                when {
+                    expression {
+                        BRANCH_NAME == "main"
+                    }
+                }
                 script {
                     //pipelineUtils.buildJar()
                     echo "Building the application...."
@@ -27,6 +32,11 @@ pipeline {
 
         stage("test") {
             steps {
+                when {
+                    expression {
+                        BRANCH_NAME == "main"
+                    }
+                }
                 script {
                     //pipelineUtils.buildDockerImage()
                     echo "Testing the application...."
@@ -36,6 +46,11 @@ pipeline {
 
         stage("deploy") {
             steps {
+                when {
+                    expression {
+                        BRANCH_NAME == "main"
+                    }
+                }
                 script {
                     //pipelineUtils.deploy()
                     echo "Deploying the application...."
