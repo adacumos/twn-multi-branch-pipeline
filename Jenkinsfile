@@ -1,36 +1,23 @@
+@Library('jenkins-shared-library')_
+
 pipeline {
     agent any
     stages {
         stage("build") {
-            when {
-                expression {
-                    BRANCH_NAME == "main"
-                }
-            }
             steps {
-                echo "Building the application...."
+                buildJar()
             }
         }
 
-        stage("test") {
-            when {
-                expression {
-                    BRANCH_NAME == "main"
-                }
-            }
+        stage("build docker image") {
             steps {
-                echo "Testing the application...."
+                buildImage()
             }
         }
 
         stage("deploy") {
-            when {
-                expression {
-                    BRANCH_NAME == "main"
-                }
-            }
             steps {
-                echo "Deploying the application...."
+                deployApp()
             }
         }
     }
